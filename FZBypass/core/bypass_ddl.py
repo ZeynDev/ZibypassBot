@@ -258,6 +258,59 @@ async def dropbox(url: str) -> str:
      return url.replace("www.","").replace("dropbox.com", "dl.dropboxusercontent.com").replace("?dl=0", "")
 
 
+async def pling_bypass(url):
+    try:
+        id_url = re.search(r"https?://(store.kde.org|www.pling.com)\/p\/(\d+)", url)[2]
+        link = f"https://www.pling.com/p/{id_url}/loadFiles"
+        res = await fetch.get(link)
+        json_dic_files = res.json().pop("files")
+        msg = f"\n**Source Link** :\n`{url}`\n**Direct Link :**\n"
+        msg += "\n".join(
+            f'**→ [{i["name"]}]({unquote(i["url"])}) ({get_readable_file_size(int(i["size"]))})**'
+            for i in json_dic_files
+        )
+        return msg
+    except Exception as e:
+        return e
+
+
+def wetransfer_bypass(url: str) -> str:
+    if url.startswith("https://we.tl/"):
+        r = requests.head(url, allow_redirects=True)
+        url = r.url
+    recipient_id = None
+    params = urllib.parse.urlparse(url).path.split("/")[2:]
+
+    if len(params) == 2:
+        transfer_id, security_hash = params
+    elif len(params) == 3:
+        transfer_id, recipient_id, security_hash = params
+    else:
+        return None
+
+    j = {
+        "intent": "entire_transfer",
+        "security_hash": security_hash,
+    }
+
+    if recipient_id:
+        j["recipient_id"] = recipient_id
+    try:
+        s = requests.Session()
+        r = s.get("https://wetransfer.com/")
+        m = re.search('name="csrf-token" content="([^"]+)"', r.text)
+        s.headers.update({"x-csrf-token": m[1], "x-requested-with": "XMLHttpRequest"})
+        r = s.post(
+            f"https://wetransfer.com/api/v4/transfers/{transfer_id}/download", json=j
+        )
+        j = r.json()
+        dl_url = j["direct_link"]
+
+        return f"\n**Source Link** :\n`{url}`\n**Direct Link :**\n{dl_url}"
+    except Exception as er:
+        return er
+
+
 async def linkvertise(url: str) -> str:
     resp = rget('https://bypass.pm/bypass2', params={'url': url}).json()
     if resp["success"]: 
