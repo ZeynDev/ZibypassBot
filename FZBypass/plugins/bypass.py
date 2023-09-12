@@ -18,14 +18,14 @@ async def start_msg(client, message):
     
     <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
 
-    <i>Thanksss to @SilentDemonSD for source and More.....</i>
+    <i>Thanksss to SilentDemonSD for source and More.....</i>
     
     <i><b>Bot Started {convert_time(time() - BOT_START)} ago...</b></i>
 
-🛃 <b>Use Me Here :</b> @Cyeberlow <i>(Bypass Topic)</i>''',
+🛃 <b>Use Me Here :</b> No Info😝<i>(Bypass Topic)</i>''',
         quote=True,
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton('🎓 Dev', url='https://t.me/Eritsuu'), InlineKeyboardButton('🔍 Channel', url="https://t.me/+BbTn2tr1KeViODA1")]
+            [InlineKeyboardButton('🎓 Dev', url='https://t.me/Eritsuu'), InlineKeyboardButton('🔍 Channel', url="https://t.me/crimsonGo")]
             ])
     )
 
@@ -148,7 +148,7 @@ async def inline_query(client, query):
         answers.append(InlineQueryResultArticle(
                 title="♻️ Bypass Usage: In Line",
                 input_message_content=InputTextMessageContent(
-                    '''<b><i>FZ Bypass Bot!</i></b>
+                    '''<b><i>Neo Bypass Bot!</i></b>
     
     <i>A Powerful Elegant Multi Threaded Bot written in Python... which can Bypass Various Shortener Links, Scrape links, and More ... </i>
     
